@@ -29,12 +29,12 @@ body {
 }
 
 /* Color for different task counts */
-.green {
+.green { 
     color: green;
-}
+} /* 0-4 tasks = green */
 .yellow {
     color: yellow;
-}
+}/* 5-9 tasks = yellow */
 .red {
     color: red;
-}
+}/* 10+  tasks = red */
