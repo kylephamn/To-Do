@@ -38,3 +38,7 @@ body {
 .red {
     color: red;
 }/* 10+  tasks = red */
+.task-item.done span {
+    text-decoration: line-through;
+    color: grey;
+}

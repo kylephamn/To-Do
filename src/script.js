@@ -35,6 +35,14 @@ function addTask() {
         dueDateInput.value = '';
 
         updateTaskCounter();
+
+        // Add event listener to mark the task as done
+        taskSpan.addEventListener('click', function() { toggleDone(li); });
+    
+        // Append the new task and sort the list
+        tasksList.appendChild(li);
+        sortTasks();
+        updateTaskCounter();
     }
 }
 
@@ -78,11 +86,13 @@ function addTask() {
     }
 }
 function toggleDone(taskItem) {
+    // Toggle a class that marks the item as done
     taskItem.classList.toggle('done');
 }
 
 function deleteTask(taskItem) {
     taskItem.remove();
+    sortTasks();
     updateTaskCounter();
 }
 
