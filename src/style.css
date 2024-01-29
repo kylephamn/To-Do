@@ -24,3 +24,17 @@ body {
     text-decoration: line-through;
     color: #888;
 }
+#taskCounter {
+    font-weight: bold;
+}
+
+/* Color for different task counts */
+.green {
+    color: green;
+}
+.yellow {
+    color: yellow;
+}
+.red {
+    color: red;
+}
