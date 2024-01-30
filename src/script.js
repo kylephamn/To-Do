@@ -12,11 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function addTask() {
     let taskInput = document.getElementById('task-input');
+    let dueDateInput = document.getElementById('due-date-input');
     if (taskInput.value.trim() === '') return;
 
     let taskList = document.getElementById('task-list');
     let li = document.createElement('li');
-    li.innerText = taskInput.value.trim() + ' ';
+    
+    // Create a span for the task text
+    let taskSpan = document.createElement('span');
+    taskSpan.textContent = taskInput.value.trim() + ' - ';
+    li.appendChild(taskSpan);
+    
+    // Create a span for the due date
+    let dueDateSpan = document.createElement('span');
+    dueDateSpan.textContent = dueDateInput.value ? `Due: ${dueDateInput.value}` : 'No due date';
+    li.appendChild(dueDateSpan);
+
     let deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'Delete';
     deleteBtn.onclick = function() {
@@ -27,19 +38,27 @@ function addTask() {
     let editBtn = document.createElement('button');
     editBtn.innerText = 'Edit';
     editBtn.onclick = function() {
-        let newText = prompt('Edit your task', li.innerText);
-        if (newText) li.innerText = newText + ' ';
-        li.appendChild(deleteBtn);
-        li.appendChild(editBtn);
+        let newText = prompt('Edit your task', taskSpan.textContent);
+        if (newText) {
+            taskSpan.textContent = newText + ' - ';
+        }
+        let newDate = prompt('Edit your due date', dueDateSpan.textContent.replace('Due: ', ''));
+        if (newDate) {
+            dueDateSpan.textContent = `Due: ${newDate}`;
+        } else {
+            dueDateSpan.textContent = 'No due date';
+        }
     };
 
     li.appendChild(deleteBtn);
     li.appendChild(editBtn);
     taskList.appendChild(li);
     taskInput.value = '';
+    dueDateInput.value = ''; // Clear the due date input after adding a task
 
     updateCounter();
 }
+
 
 function updateCounter() {
     let taskCounter = document.getElementById('task-counter');
