@@ -2,14 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('addButton').addEventListener('click', addTask);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('task-input').addEventListener('keyup', event => {
-        if (event.key === 'Enter') {
-            addTask();
-        }
-    });
-});
-
 function addTask() {
     let taskInput = document.getElementById('task-input');
     let dueDateInput = document.getElementById('due-date-input');
@@ -59,13 +51,6 @@ function addTask() {
     updateCounter();
 }
 
-
-function updateCounter() {
-    let taskCounter = document.getElementById('task-counter');
-    let tasks = document.getElementById('task-list').children.length;
-    taskCounter.innerText = 'Tasks: ' + tasks;
-    taskCounter.className = tasks < 6 ? 'green' : 'red';
-}
 
 
 function deleteTask(taskItem) {
