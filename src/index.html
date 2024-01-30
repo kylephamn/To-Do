@@ -7,24 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="taskManager">
-        <input type="text" id="taskInput" placeholder="Add a new task">
-        <input type="date" id="dueDateInput">
-        <select id="priorityInput">
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-        </select>
-        <button id="addTaskBtn">Add Task</button>
-        <div>
-            <button onclick="filterTasks('all')">All Tasks</button>
-            <button onclick="filterTasks('completed')">Completed</button>
-            <button onclick="filterTasks('pending')">Pending</button>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div id="taskManager">
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <input type="date" id="dueDateInput">
+            <select id="priorityInput">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button id="addTaskBtn">Add Task</button>
+            <div>
+                <button onclick="filterTasks('all')">All Tasks</button>
+                <button onclick="filterTasks('completed')">Completed</button>
+                <button onclick="filterTasks('pending')">Pending</button>
+            </div>
+            <div id="taskCounter" class="green">Tasks: 0</div>
+            <ul id="taskList"></ul>
         </div>
-        <div id="taskCounter" class="green">Tasks: 0</div>
-        <ul id="taskList"></ul>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,81 +1,30 @@
-body {
+body, .container {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-#task-manager {
-    width: 300px;
-    margin: auto;
     text-align: center;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f4f4f4;
-#task-input {
-    width: 200px;
-    padding: 10px;
-    margin: 10px 0;
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
 }
 
-header h1 {
-    margin: 0;
+#taskManager {
+    margin-top: 20px;
 }
 
-#taskAdder {
-    display: flex;
-    align-items: center;
-    background-color: #e9e9e9;
-    padding: 10px;
-}
-
-#taskAdder button,
-#calendarButton {
-    margin-right: 10px;
-}
-
-#taskAdder div {
-    flex-grow: 1;
-}
-
-#taskAdder input,
-#taskAdder button {
-    padding: 5px;
-}
-
-#tasks {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#tasks li {
-    display: flex;
-    justify-content: space-between;
-    background-color: #f0f0f0;
+#taskList li {
+    background: #f0f0f0;
     margin-top: 5px;
     padding: 10px;
+    border-radius: 5px;
+    list-style-type: none;
 }
 
-#tasks li:nth-child(odd) {
-    background-color: #e1e1e1;
-}
-
-#taskCounter.green {
 .green {
     color: green;
 }
 
-#taskCounter.yellow {
-    color: yellow;
 .red {
     color: red;
-}
-
-#taskCounter.red {
-    color: red;
-li {
-    margin: 5px 0;
-    list-style-type: none;
 }

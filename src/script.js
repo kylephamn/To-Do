@@ -8,15 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let editIndex = null;
 
+    function resetForm() {
+        taskInput.value = '';
+        dueDateInput.value = '';
+        priorityInput.value = 'Low';
+        addTaskBtn.textContent = 'Add Task';
+        editIndex = null;
+    }
+
     function updateTaskCounter() {
         const count = tasks.length;
         taskCounter.textContent = `Tasks: ${count}`;
         taskCounter.className = count < 6 ? 'green' : 'red';
-    }
-
-    function saveTasks() {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        updateTaskList();
     }
 
     function addOrUpdateTask() {
@@ -30,12 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (editIndex !== null) {
             tasks[editIndex] = taskDetails;
-            editIndex = null;
         } else {
             tasks.push(taskDetails);
         }
-
         saveTasks();
+        resetForm();
     }
 
     function editTask(index) {
@@ -43,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         taskInput.value = task.taskName;
         dueDateInput.value = task.dueDate;
         priorityInput.value = task.priority;
-        editIndex = index;
         addTaskBtn.textContent = 'Update Task';
+        editIndex = index;
     }
 
     function deleteTask(index) {
@@ -55,6 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleCompletion(index) {
         tasks[index].completed = !tasks[index].completed;
         saveTasks();
+    }
+
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        updateTaskList();
     }
 
     function updateTaskList(filter = '') {
