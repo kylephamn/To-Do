@@ -2,42 +2,52 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('addButton').addEventListener('click', addTask);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('task-input').addEventListener('keyup', event => {
+        if (event.key === 'Enter') {
+            addTask();
+        }
+    });
+});
+
 function addTask() {
-    let taskNameInput = document.getElementById('taskInput');
-    let classNameInput = document.getElementById('classInput');
-    let descriptionInput = document.getElementById('descriptionInput');
-    let dueDateInput = document.getElementById('dueDateInput');
-    let tasksList = document.getElementById('tasks');
+    let taskInput = document.getElementById('task-input');
+    if (taskInput.value.trim() === '') return;
 
-    let taskName = taskNameInput.value.trim();
-    let className = classNameInput.value.trim();
-    let description = descriptionInput.value.trim();
-    let dueDate = dueDateInput.value;
-
-    if (!taskName || !dueDate) {
-        alert("Please enter at least a task name and a due date.");
-        return;
-    }
-
+    let taskList = document.getElementById('task-list');
     let li = document.createElement('li');
-    li.innerHTML = `
-        <span class="task-class">${className}</span>
-        <span class="task-name" contenteditable="true">${taskName}</span>
-        <span class="task-description" contenteditable="true">${description}</span>
-        <span class="task-due-date">${dueDate}</span>
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn" onclick="deleteTask(this.parentNode)">Delete</button>
-    `;
+    li.innerText = taskInput.value.trim() + ' ';
+    let deleteBtn = document.createElement('button');
+    deleteBtn.innerText = 'Delete';
+    deleteBtn.onclick = function() {
+        taskList.removeChild(li);
+        updateCounter();
+    };
 
-    tasksList.appendChild(li);
+    let editBtn = document.createElement('button');
+    editBtn.innerText = 'Edit';
+    editBtn.onclick = function() {
+        let newText = prompt('Edit your task', li.innerText);
+        if (newText) li.innerText = newText + ' ';
+        li.appendChild(deleteBtn);
+        li.appendChild(editBtn);
+    };
 
-    taskNameInput.value = '';
-    classNameInput.value = '';
-    descriptionInput.value = '';
-    dueDateInput.value = '';
+    li.appendChild(deleteBtn);
+    li.appendChild(editBtn);
+    taskList.appendChild(li);
+    taskInput.value = '';
 
-    updateTaskCounter();
+    updateCounter();
 }
+
+function updateCounter() {
+    let taskCounter = document.getElementById('task-counter');
+    let tasks = document.getElementById('task-list').children.length;
+    taskCounter.innerText = 'Tasks: ' + tasks;
+    taskCounter.className = tasks < 6 ? 'green' : 'red';
+}
+
 
 function deleteTask(taskItem) {
     taskItem.remove();
