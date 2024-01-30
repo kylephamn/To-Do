@@ -23,6 +23,14 @@
                 <button onclick="filterTasks('completed')">Completed</button>
                 <button onclick="filterTasks('pending')">Pending</button>
             </div>
+            <div>
+                Sort by:
+                <select id="sortTasks">
+                    <option value="dueDate">Due Date</option>
+                    <option value="priority">Priority</option>
+                </select>
+                <button onclick="sortTasks()">Sort</button>
+            </div>
             <div id="taskCounter" class="green">Tasks: 0</div>
             <ul id="taskList"></ul>
         </div>

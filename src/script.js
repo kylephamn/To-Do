@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskCounter = document.getElementById('taskCounter');
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let editIndex = null;
+    let currentFilter = 'all';
 
     function resetForm() {
         taskInput.value = '';
@@ -61,16 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function saveTasks() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        updateTaskList();
+        updateTaskList(currentFilter);
     }
 
-    function updateTaskList(filter = '') {
+    function updateTaskList(filter = '', sort = document.getElementById('sortTasks').value) {
+        currentFilter = filter;
         taskList.innerHTML = '';
-        tasks.filter(task => {
+        let filteredTasks = tasks.filter(task => {
             if (filter === 'completed') return task.completed;
             if (filter === 'pending') return !task.completed;
             return true;
-        }).forEach((task, index) => {
+        });
+
+        if (sort === 'dueDate') {
+            filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        } else if (sort === 'priority') {
+            const priorityOrder = { 'High': 1, 'Medium': 2, 'Low': 3 };
+            filteredTasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+        }
+
+        filteredTasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
                 ${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})
@@ -86,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteTask = deleteTask;
     window.toggleCompletion = toggleCompletion;
     window.filterTasks = (filter) => updateTaskList(filter);
+    window.sortTasks = () => updateTaskList(currentFilter);
 
     addTaskBtn.addEventListener('click', addOrUpdateTask);
 
