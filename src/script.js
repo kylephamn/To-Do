@@ -1,109 +1,87 @@
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('addButton').addEventListener('click', addTask);
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskInput = document.getElementById('taskInput');
+    const dueDateInput = document.getElementById('dueDateInput');
+    const priorityInput = document.getElementById('priorityInput');
+    const taskList = document.getElementById('taskList');
+    const taskCounter = document.getElementById('taskCounter');
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let editIndex = null;
 
-function addTask() {
-    let taskInput = document.getElementById('task-input');
-    let dueDateInput = document.getElementById('due-date-input');
-    if (taskInput.value.trim() === '') return;
+    function updateTaskCounter() {
+        const count = tasks.length;
+        taskCounter.textContent = `Tasks: ${count}`;
+        taskCounter.className = count < 6 ? 'green' : 'red';
+    }
 
-    let taskList = document.getElementById('task-list');
-    let li = document.createElement('li');
-    
-    // Create a span for the task text
-    let taskSpan = document.createElement('span');
-    taskSpan.textContent = taskInput.value.trim() + ' - ';
-    li.appendChild(taskSpan);
-    
-    // Create a span for the due date
-    let dueDateSpan = document.createElement('span');
-    dueDateSpan.textContent = dueDateInput.value ? `Due: ${dueDateInput.value}` : 'No due date';
-    li.appendChild(dueDateSpan);
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        updateTaskList();
+    }
 
-    let deleteBtn = document.createElement('button');
-    deleteBtn.innerText = 'Delete';
-    deleteBtn.onclick = function() {
-        taskList.removeChild(li);
-        updateCounter();
-    };
+    function addOrUpdateTask() {
+        const taskName = taskInput.value.trim();
+        const dueDate = dueDateInput.value;
+        const priority = priorityInput.value;
 
-    let editBtn = document.createElement('button');
-    editBtn.innerText = 'Edit';
-    editBtn.onclick = function() {
-        let newText = prompt('Edit your task', taskSpan.textContent);
-        if (newText) {
-            taskSpan.textContent = newText + ' - ';
-        }
-        let newDate = prompt('Edit your due date', dueDateSpan.textContent.replace('Due: ', ''));
-        if (newDate) {
-            dueDateSpan.textContent = `Due: ${newDate}`;
+        if (taskName === "" || dueDate === "") return;
+
+        const taskDetails = { taskName, dueDate, priority, completed: false };
+
+        if (editIndex !== null) {
+            tasks[editIndex] = taskDetails;
+            editIndex = null;
         } else {
-            dueDateSpan.textContent = 'No due date';
+            tasks.push(taskDetails);
         }
-    };
 
-    li.appendChild(deleteBtn);
-    li.appendChild(editBtn);
-    taskList.appendChild(li);
-    taskInput.value = '';
-    dueDateInput.value = ''; // Clear the due date input after adding a task
-
-    updateCounter();
-}
-
-
-
-function deleteTask(taskItem) {
-    taskItem.remove();
-    updateTaskCounter();
-}
-
-function updateTaskCounter() {
-    let tasksList = document.getElementById('tasks');
-    let counter = tasksList.children.length;
-    let taskCounterElem = document.getElementById('taskCounter');
-    taskCounterElem.textContent = `${counter} Task${counter !== 1 ? 's' : ''}`;
-
-    taskCounterElem.className = '';
-    if (counter < 5) {
-        taskCounterElem.classList.add('green');
-    } else if (counter >= 5 && counter < 10) {
-        taskCounterElem.classList.add('yellow');
-    } else {
-        taskCounterElem.classList.add('red');
+        saveTasks();
     }
-}
 
-// Add event listeners to the edit buttons (for newly created tasks)
-document.getElementById('tasks').addEventListener('click', function(e) {
-    if (e.target && e.target.matches('.edit-btn')) {
-        let li = e.target.parentNode;
-        let name = li.querySelector('.task-name');
-        let description = li.querySelector('.task-description');
-        let dueDate = li.querySelector('.task-due-date');
-
-        // If you need to save the changes (e.g., to a server or local storage), do it here
-
-        // Switch to 'view' mode by making content uneditable
-        name.contentEditable = 'false';
-        description.contentEditable = 'false';
-        dueDate.contentEditable = 'false';
-        e.target.textContent = 'Edit';  // Change button text back to 'Edit'
+    function editTask(index) {
+        const task = tasks[index];
+        taskInput.value = task.taskName;
+        dueDateInput.value = task.dueDate;
+        priorityInput.value = task.priority;
+        editIndex = index;
+        addTaskBtn.textContent = 'Update Task';
     }
-});
 
-// To handle the edit functionality, you can toggle contenteditable on the task elements
-document.getElementById('tasks').addEventListener('click', function(e) {
-    if (e.target && e.target.matches('.edit-btn')) {
-        let li = e.target.parentNode;
-        let name = li.querySelector('.task-name');
-        let description = li.querySelector('.task-description');
-        let dueDate = li.querySelector('.task-due-date');
-
-        let isEditable = name.isContentEditable;
-        name.contentEditable = isEditable ? 'false' : 'true';
-        description.contentEditable = isEditable ? 'false' : 'true';
-        dueDate.contentEditable = isEditable ? 'false' : 'true';
-        e.target.textContent = isEditable ? 'Edit' : 'Save';  // Toggle button text between 'Edit' and 'Save'
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        saveTasks();
     }
+
+    function toggleCompletion(index) {
+        tasks[index].completed = !tasks[index].completed;
+        saveTasks();
+    }
+
+    function updateTaskList(filter = '') {
+        taskList.innerHTML = '';
+        tasks.filter(task => {
+            if (filter === 'completed') return task.completed;
+            if (filter === 'pending') return !task.completed;
+            return true;
+        }).forEach((task, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})
+                <button onclick="editTask(${index})">Edit</button>
+                <button onclick="deleteTask(${index})">Delete</button>
+                <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCompletion(${index})"> Complete`;
+            taskList.appendChild(li);
+        });
+        updateTaskCounter();
+    }
+
+    window.editTask = editTask;
+    window.deleteTask = deleteTask;
+    window.toggleCompletion = toggleCompletion;
+    window.filterTasks = (filter) => updateTaskList(filter);
+
+    addTaskBtn.addEventListener('click', addOrUpdateTask);
+
+    // Initial tasks display
+    updateTaskList();
 });
