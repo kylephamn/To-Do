@@ -28,3 +28,40 @@ body, .container {
 .red {
     color: red;
 }
+.task-manager-dashboard {
+    display: flex;
+    justify-content: space-around;
+}
+
+#task-manager {
+    /* Styles for your task manager */
+    width: 50%;
+}
+
+#calendar-container {
+    width: 300px; /* Adjust as needed */
+    margin-top: 20px;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day {
+    padding: 10px;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.task-dot {
+    height: 5px;
+    width: 5px;
+    background-color: #007bff; /* Blue dot for tasks */
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    left: calc(50% - 2.5px);
+}

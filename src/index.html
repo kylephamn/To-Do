@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Task Manager</title>
+    <title>Task Manager with Calendar</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Task Manager</h1>
-        <div id="taskManager">
+    <div class="task-manager-dashboard">
+        <div id="task-manager">
             <input type="text" id="taskInput" placeholder="Add a new task">
             <input type="date" id="dueDateInput">
             <select id="priorityInput">
@@ -33,6 +32,9 @@
             </div>
             <div id="taskCounter" class="green">Tasks: 0</div>
             <ul id="taskList"></ul>
+        </div>
+        <div id="calendar-container">
+            <div id="calendar"></div>
         </div>
     </div>
     <script src="script.js"></script>
