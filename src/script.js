@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (editIndex !== null) {
             tasks[editIndex] = taskDetails;
-            editIndex = null;
         } else {
             tasks.push(taskDetails);
         }
@@ -70,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveTasks() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         updateTaskList(currentFilter);
+        buildCalendar(); // Rebuild the calendar when tasks are saved
     }
 
     function updateTaskList(filter = '') {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredTasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <span>${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})</span>
+                ${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})
                 <button onclick="editTask(${index})">Edit</button>
                 <button onclick="deleteTask(${index})">Delete</button>
                 <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCompletion(${index})"> Complete`;
@@ -94,20 +94,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function buildCalendar() {
-        calendarEl.innerHTML = ''; // Clear the calendar
         const today = new Date();
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
-        const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Clear the calendar grid and set the month name
+        const calendarTitle = document.createElement('div');
+        calendarTitle.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+        calendarTitle.className = 'calendar-title';
+        calendarEl.innerHTML = ''; // Clear previous calendar
+        calendarEl.appendChild(calendarTitle);
 
         for (let day = 1; day <= daysInMonth; day++) {
             const dayEl = document.createElement('div');
             dayEl.className = 'calendar-day';
             dayEl.textContent = day;
 
-            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            if (tasks.some(task => task.dueDate === dateStr)) {
+            const dayString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            if (tasks.some(task => task.dueDate === dayString)) {
                 const dotEl = document.createElement('span');
                 dotEl.className = 'task-dot';
                 dayEl.appendChild(dotEl);
@@ -117,17 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function getMonthName(monthIndex) {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[monthIndex];
+    }
+
     window.editTask = editTask;
     window.deleteTask = deleteTask;
     window.toggleCompletion = toggleCompletion;
-    window.filterTasks = (filter) => {
-        updateTaskList(filter);
-        buildCalendar();
-    };
-    window.sortTasks = () => {
-        updateTaskList(currentFilter);
-        buildCalendar();
-    };
+    window.filterTasks = filterTasks;
+    window.sortTasks = sortTasks;
 
     addTaskBtn.addEventListener('click', addOrUpdateTask);
 
@@ -135,3 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTaskList();
     buildCalendar();
 });
+
+function filterTasks(filter) {
+    // This function will need implementation details based on your filtering logic
+}
+
+function sortTasks() {
+    // This function will need implementation details based on your sorting logic
+}
