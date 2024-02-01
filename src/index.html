@@ -4,66 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager with Calendar</title>
-    <style>
-        .task-manager-dashboard {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        #task-manager {
-            flex-grow: 1;
-            margin-right: 20px;
-        }
-
-        #calendar-container {
-            width: 300px; /* Adjust as needed */
-            margin-top: 20px;
-        }
-
-        #calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            text-align: center;
-        }
-
-        .calendar-day {
-            padding: 10px;
-            border: 1px solid #ccc;
-            position: relative;
-        }
-
-        .task-dot {
-            height: 5px;
-            width: 5px;
-            background-color: #007bff; /* Blue dot for tasks */
-            border-radius: 50%;
-            position: absolute;
-            bottom: 5px;
-            left: calc(50% - 2.5px);
-        }
-
-        #taskList {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #taskList li {
-            background: #f0f0f0;
-            margin-top: 5px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .green {
-            color: green;
-        }
-
-        .red {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="task-manager-dashboard">
@@ -93,7 +34,7 @@
             <ul id="taskList"></ul>
         </div>
         <div id="calendar-container">
-            <div id="calendar-title">Calendar</div>
+            <div id="calendar-title"></div>
             <div id="calendar"></div>
         </div>
     </div>

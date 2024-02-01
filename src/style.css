@@ -1,66 +1,80 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background: #f7f7f7;
 }
 
 .task-manager-dashboard {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 #task-manager {
-    flex: 1;
-    margin-right: 20px;
+    width: 65%;
+    margin-right: 5%;
 }
 
-#task-manager input[type="text"],
-#task-manager input[type="date"],
-#task-manager select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+#calendar-container {
+    width: 30%;
 }
 
-#task-manager button {
-    width: 100%;
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day {
     padding: 10px;
-    margin-bottom: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: #fff;
     cursor: pointer;
 }
 
-#task-manager button:hover {
-    background-color: #0056b3;
+.calendar-day:hover {
+    background: #f0f0f0;
 }
 
+.task-dot {
+    height: 5px;
+    width: 5px;
+    background-color: #007bff; /* Blue dot for tasks */
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Add styles for your task list, buttons, inputs, etc., as needed */
 #taskList {
     list-style-type: none;
     padding: 0;
 }
 
 #taskList li {
-    background: #fff;
-    margin-bottom: 10px;
+    background: #f0f0f0;
+    margin-top: 5px;
     padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 5px;
+    position: relative;
 }
 
-#taskCounter {
-    margin-bottom: 20px;
+#taskList li button {
+    margin-left: 10px;
 }
 
 .green {
@@ -71,28 +85,26 @@ body {
     color: red;
 }
 
-#calendar-container {
-    width: 300px;
-    background-color: #fff;
-    border: 1px solid #ddd;
+/* Add any additional styling for buttons, inputs, etc. */
+input[type="text"],
+input[type="date"],
+select {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 10px;
 }
 
-#calendar-title {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 20px;
-    color: #333;
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin: 5px 0;
+    cursor: pointer;
 }
 
-#calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+button:hover {
+    background-color: #0056b3;
 }
-
-.calendar-day {
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #e1e
