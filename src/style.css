@@ -10,6 +10,7 @@ body {
 
 .task-manager-dashboard {
     display: flex;
+    flex-direction: row-reverse; /* Reverse the order to put the calendar on the left */
     justify-content: space-between;
     align-items: flex-start;
     width: 80%;
@@ -21,12 +22,13 @@ body {
 }
 
 #task-manager {
-    width: 65%;
-    margin-right: 5%;
+    flex: 2;
+    margin-left: 5%; /* Adjust spacing as needed */
 }
 
 #calendar-container {
-    width: 30%;
+    flex: 1;
+    order: -1; /* Move calendar to the left side */
 }
 
 #calendar {
@@ -59,7 +61,6 @@ body {
     transform: translateX(-50%);
 }
 
-/* Add styles for your task list, buttons, inputs, etc., as needed */
 #taskList {
     list-style-type: none;
     padding: 0;
@@ -71,6 +72,9 @@ body {
     padding: 10px;
     border-radius: 5px;
     position: relative;
+    display: flex;
+    justify-content: space-between; /* Align items to the left and right */
+    align-items: center; /* Align items vertically */
 }
 
 #taskList li button {
@@ -85,7 +89,6 @@ body {
     color: red;
 }
 
-/* Add any additional styling for buttons, inputs, etc. */
 input[type="text"],
 input[type="date"],
 select {
@@ -113,7 +116,9 @@ button:hover {
     background-color: #007bff;
     color: white;
     padding: 1rem;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .task-manager-header h1 {
@@ -123,7 +128,6 @@ button:hover {
 
 nav {
     display: inline-block;
-    margin: 0 1rem;
 }
 
 .filter-btn {
@@ -142,7 +146,8 @@ nav {
 }
 
 .task-actions {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
 .task-actions .sort-select {
@@ -161,23 +166,3 @@ nav {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.task-actions button:hover {
-    background-color: #e7e7e7;
-}
-
-.task-manager-dashboard {
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-}
-
-#calendar-container {
-    flex: 1;
-    margin-right: 20px; /* Adjust spacing as needed */
-}
-
-#task-manager {
-    flex: 2;
-}

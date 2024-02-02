@@ -14,27 +14,22 @@
             <button id="completedTasks" class="filter-btn">Completed</button>
             <button id="pendingTasks" class="filter-btn">Pending</button>
         </div>
-        <div class="task-actions">
-            <button id="addTaskBtn">Add Task</button>
-            <label for="sortTasks">Sort by:</label>
-            <select id="sortTasks" class="sort-select">
-                <option value="dueDate">Due Date</option>
-                <option value="priority">Priority</option>
-            </select>
-        </div>
     </header>
     <div class="task-manager-dashboard">
         <div id="calendar-container">
             <div id="calendar"></div>
         </div>
         <div id="task-manager">
-            <input type="text" id="taskInput" placeholder="Add a new task">
-            <input type="date" id="dueDateInput">
-            <select id="priorityInput">
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
+            <div class="task-input-area">
+                <input type="text" id="taskInput" placeholder="Add a new task">
+                <input type="date" id="dueDateInput">
+                <select id="priorityInput">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <button id="addTaskBtn">Add Task</button>
+            </div>
             <div id="taskCounter" class="green">Tasks: 0</div>
             <ul id="taskList"></ul>
         </div>

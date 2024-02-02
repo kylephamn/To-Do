@@ -69,6 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
             taskList.appendChild(li);
         });
 
+        filteredTasks.forEach((task, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})</span>
+                <button onclick="editTask(${index})">Edit</button>
+                <button onclick="deleteTask(${index})">Delete</button>
+                <button onclick="markAsComplete(${index})">Completed</button>
+                <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCompletion(${index})">`;
+            taskList.appendChild(li);
+        });
         updateTaskCounter();
     }
 
@@ -76,6 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const count = tasks.length;
         taskCounter.textContent = `Tasks: ${count}`;
         taskCounter.className = count < 6 ? 'green' : 'red';
+    }
+
+    function markAsComplete(index) {
+        tasks[index].completed = true;
+        saveTasks();
     }
 
     function buildCalendar() {
@@ -150,6 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTaskList(filter);
     }
 
+    document.getElementById('addTaskBtn').addEventListener('click', addOrUpdateTask);
+    
     function sortTasks(sortBy) {
         if (sortBy === 'dueDate') {
             tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
