@@ -108,3 +108,61 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.task-manager-header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.task-manager-header h1 {
+    margin: 0;
+    color: #fff;
+}
+
+nav {
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    background: none;
+    border: 1px solid #fff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: #0056b3;
+}
+
+.task-actions {
+    display: inline-block;
+}
+
+.task-actions .sort-select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    background-color: white;
+    color: #333;
+}
+
+.task-actions button {
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    background-color: white;
+    color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-actions button:hover {
+    background-color: #e7e7e7;
+}
