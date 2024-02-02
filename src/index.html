@@ -9,11 +9,11 @@
 <body>
     <header class="task-manager-header">
         <h1>Task Manager</h1>
-        <nav>
+        <div>
             <button id="allTasks" class="filter-btn active">All Tasks</button>
             <button id="completedTasks" class="filter-btn">Completed</button>
             <button id="pendingTasks" class="filter-btn">Pending</button>
-        </nav>
+        </div>
         <div class="task-actions">
             <button id="addTaskBtn">Add Task</button>
             <label for="sortTasks">Sort by:</label>
@@ -23,8 +23,10 @@
             </select>
         </div>
     </header>
-
     <div class="task-manager-dashboard">
+        <div id="calendar-container">
+            <div id="calendar"></div>
+        </div>
         <div id="task-manager">
             <input type="text" id="taskInput" placeholder="Add a new task">
             <input type="date" id="dueDateInput">
@@ -36,11 +38,7 @@
             <div id="taskCounter" class="green">Tasks: 0</div>
             <ul id="taskList"></ul>
         </div>
-        <div id="calendar-container">
-            <div id="calendar"></div>
-        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

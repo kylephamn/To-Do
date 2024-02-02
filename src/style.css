@@ -166,3 +166,18 @@ nav {
 .task-actions button:hover {
     background-color: #e7e7e7;
 }
+
+.task-manager-dashboard {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+#calendar-container {
+    flex: 1;
+    margin-right: 20px; /* Adjust spacing as needed */
+}
+
+#task-manager {
+    flex: 2;
+}
