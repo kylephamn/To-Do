@@ -10,9 +10,6 @@ body {
 
 .task-manager-dashboard {
     display: flex;
-    flex-direction: row-reverse; /* Reverse the order to put the calendar on the left */
-    justify-content: space-between;
-    align-items: flex-start;
     width: 80%;
     max-width: 1200px;
     margin-top: 20px;
@@ -21,14 +18,13 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-#task-manager {
-    flex: 2;
-    margin-left: 5%; /* Adjust spacing as needed */
-}
-
 #calendar-container {
     flex: 1;
-    order: -1; /* Move calendar to the left side */
+    margin-right: 20px; /* Adjust spacing as needed */
+}
+
+#task-manager {
+    flex: 2;
 }
 
 #calendar {
@@ -73,8 +69,8 @@ body {
     border-radius: 5px;
     position: relative;
     display: flex;
-    justify-content: space-between; /* Align items to the left and right */
-    align-items: center; /* Align items vertically */
+    justify-content: space-between;
+    align-items: center;
 }
 
 #taskList li button {
@@ -113,12 +109,12 @@ button:hover {
 }
 
 .task-manager-header {
-    background-color: #18670c;
+    background-color: #146a0f;
     color: white;
     padding: 1rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .task-manager-header h1 {
@@ -127,7 +123,8 @@ button:hover {
 }
 
 nav {
-    display: inline-block;
+    display: flex;
+    margin: 1rem 0;
 }
 
 .filter-btn {
@@ -148,6 +145,8 @@ nav {
 .task-actions {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .task-actions .sort-select {
@@ -158,12 +157,21 @@ nav {
     color: #333;
 }
 
-.task-actions button {
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    background-color: white;
-    color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.task-input-area {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#addTaskBtn {
+    order: 2; /* Position the Add Task button to the right */
+    margin-left: 1rem; /* Provide some space from the form elements */
+}
+
+/* Ensure that the header is fixed at the top */
+.task-manager-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
