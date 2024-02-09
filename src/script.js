@@ -77,33 +77,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
+    
         const calendarTitle = document.createElement('div');
         calendarTitle.className = 'calendar-title';
         calendarTitle.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
         calendarEl.appendChild(calendarTitle);
-
+    
         for (let day = 1; day <= daysInMonth; day++) {
             const dayEl = document.createElement('div');
             dayEl.className = 'calendar-day';
             dayEl.textContent = day;
-
+    
             const taskDueThisDay = tasks.some(task => {
                 const taskDate = new Date(task.dueDate);
                 return taskDate.getDate() === day &&
                     taskDate.getMonth() === currentMonth &&
                     taskDate.getFullYear() === currentYear;
             });
-
+    
             if (taskDueThisDay) {
                 const dotEl = document.createElement('span');
                 dotEl.className = 'task-dot';
                 dayEl.appendChild(dotEl);
             }
-
+    
             calendarEl.appendChild(dayEl);
         }
     }
+    
+    function getMonthName(monthIndex) {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[monthIndex];
+    }    
 
     // Expose functions to global scope
     window.editTask = (index) => {

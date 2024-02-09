@@ -168,9 +168,20 @@ main-content {
 }
 
 #calendar-container {
-    width: 20%; /* or whatever width you prefer */
+    width: 20%;
     padding: 10px;
+    border: 1px solid #ccc; /* Add a border for visibility */
+    background-color: #fff; /* Add a background color */
 }
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+    padding: 10px; /* Add padding to make the calendar look better */
+}
+
 
 .task-manager-dashboard {
     flex-grow: 1; /* takes up the rest of the space */
