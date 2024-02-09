@@ -8,74 +8,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('calendar');
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let editIndex = null;
-    let currentFilter = 'all';
 
-    // Build the calendar when the DOM content has been loaded
-    buildCalendar();
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        updateTaskList();
+        buildCalendar();
+    }
 
-    addTaskBtn.addEventListener('click', () => {
+    function addOrUpdateTask() {
         const taskName = taskInput.value.trim();
         const dueDate = dueDateInput.value;
         const priority = priorityInput.value;
-        
+
         if (!taskName || !dueDate) {
             alert('Please fill in all fields.');
             return;
         }
 
         const newTask = { taskName, dueDate, priority, completed: false };
-        
+
         if (editIndex !== null) {
             tasks[editIndex] = newTask;
             editIndex = null;
+            addTaskBtn.textContent = 'Add Task';
         } else {
             tasks.push(newTask);
         }
 
         saveTasks();
         resetForm();
-    });
+    }
 
     function resetForm() {
         taskInput.value = '';
         dueDateInput.value = '';
         priorityInput.value = 'Low';
-        addTaskBtn.textContent = 'Add Task';
         editIndex = null;
-        buildCalendar();
     }
 
-    function saveTasks() {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        updateTaskList(currentFilter);
-        buildCalendar();
-    }
-
-    function updateTaskList(filter) {
+    function updateTaskList() {
         taskList.innerHTML = '';
-        const filteredTasks = tasks.filter(task => {
-            if (filter === 'completed') return task.completed;
-            if (filter === 'pending') return !task.completed;
-            return true; // If filter is 'all' or not set
-        });
-
-        filteredTasks.forEach((task, index) => {
+        tasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
                 <span>${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})</span>
                 <button onclick="editTask(${index})">Edit</button>
                 <button onclick="deleteTask(${index})">Delete</button>
-                <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCompletion(${index})">`;
-            taskList.appendChild(li);
-        });
-
-        filteredTasks.forEach((task, index) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${task.taskName} (Due: ${task.dueDate}, Priority: ${task.priority})</span>
-                <button onclick="editTask(${index})">Edit</button>
-                <button onclick="deleteTask(${index})">Delete</button>
-                <button onclick="markAsComplete(${index})">Completed</button>
+                ${!task.completed ? `<button onclick="completeTask(${index})">Complete</button>` : ''}
                 <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCompletion(${index})">`;
             taskList.appendChild(li);
         });
@@ -83,12 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateTaskCounter() {
-        const count = tasks.length;
-        taskCounter.textContent = `Tasks: ${count}`;
-        taskCounter.className = count < 6 ? 'green' : 'red';
+        taskCounter.textContent = `Tasks: ${tasks.length}`;
+        taskCounter.className = tasks.length < 6 ? 'green' : 'red';
     }
 
-    function markAsComplete(index) {
+    function completeTask(index) {
         tasks[index].completed = true;
         saveTasks();
     }
@@ -127,14 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function getMonthName(monthIndex) {
-        const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        return monthNames[monthIndex];
-    }
-
+    // Expose functions to global scope
     window.editTask = (index) => {
         const task = tasks[index];
         taskInput.value = task.taskName;
@@ -154,26 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
         saveTasks();
     };
 
-    // Filter and sort handlers
-    document.getElementById('allTasks').addEventListener('click', () => filterTasks('all'));
-    document.getElementById('completedTasks').addEventListener('click', () => filterTasks('completed'));
-    document.getElementById('pendingTasks').addEventListener('click', () => filterTasks('pending'));
-    document.getElementById('sortTasks').addEventListener('change', (e) => sortTasks(e.target.value));
+    window.completeTask = completeTask;
 
-    function filterTasks(filter) {
-        currentFilter = filter;
-        updateTaskList(filter);
-    }
+    // Event listeners for sorting and filtering
+    document.getElementById('allTasks').addEventListener('click', () => updateTaskList());
+    document.getElementById('completedTasks').addEventListener('click', () => updateTaskList('completed'));
+    document.getElementById('pendingTasks').addEventListener('click', () => updateTaskList('pending'));
 
-    document.getElementById('addTaskBtn').addEventListener('click', addOrUpdateTask);
-    
-    function sortTasks(sortBy) {
-        if (sortBy === 'dueDate') {
-            tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-        } else if (sortBy === 'priority') {
-            const priorityOrder = { 'High': 1, 'Medium': 2, 'Low': 3 };
-            tasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-        }
-        updateTaskList(currentFilter);
-    }
+    // Call initial update and build functions
+    updateTaskList();
+    buildCalendar();
 });

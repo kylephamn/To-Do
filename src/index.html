@@ -9,31 +9,39 @@
 <body>
     <header class="task-manager-header">
         <h1>Task Manager</h1>
-        <div>
+        <nav>
             <button id="allTasks" class="filter-btn active">All Tasks</button>
             <button id="completedTasks" class="filter-btn">Completed</button>
             <button id="pendingTasks" class="filter-btn">Pending</button>
+        </nav>
+        <div class="task-actions">
+            <button id="addTaskBtn">Add Task</button>
+            <label for="sortTasks">Sort by:</label>
+            <select id="sortTasks">
+                <option value="dueDate">Due Date</option>
+                <option value="priority">Priority</option>
+            </select>
         </div>
     </header>
+
     <div class="task-manager-dashboard">
         <div id="calendar-container">
             <div id="calendar"></div>
         </div>
         <div id="task-manager">
-            <div class="task-input-area">
-                <input type="text" id="taskInput" placeholder="Add a new task">
-                <input type="date" id="dueDateInput">
-                <select id="priorityInput">
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
-                <button id="addTaskBtn">Add Task</button>
-            </div>
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <input type="date" id="dueDateInput">
+            <select id="priorityInput">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button id="addTaskBtn">Add Task</button> <!-- Ensure this button is not duplicated -->
             <div id="taskCounter" class="green">Tasks: 0</div>
             <ul id="taskList"></ul>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
