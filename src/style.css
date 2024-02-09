@@ -115,7 +115,7 @@ button:hover {
 }
 
 .task-manager-header {
-    background-color: #007bff; /* Or any color you prefer */
+    background-color: #D9782D; /* Or any color you prefer */
     color: white;
     padding: 1rem;
     position: fixed; /* Keep the header fixed at the top */
@@ -161,4 +161,18 @@ nav {
 
 #addTaskBtn {
     margin-left: auto; /* Moves the Add Task button to the right */
+}
+main-content {
+    display: flex;
+    flex-direction: row;
+}
+
+#calendar-container {
+    width: 20%; /* or whatever width you prefer */
+    padding: 10px;
+}
+
+.task-manager-dashboard {
+    flex-grow: 1; /* takes up the rest of the space */
+    padding: 10px;
 }

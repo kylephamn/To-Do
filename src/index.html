@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager with Calendar</title>
+    <title>Kyle's Task Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,20 +24,22 @@
         </div>
     </header>
 
-    <div class="task-manager-dashboard">
+    <div class="main-content">
         <div id="calendar-container">
             <div id="calendar"></div>
         </div>
-        <div id="task-manager">
-            <input type="text" id="taskInput" placeholder="Add a new task">
-            <input type="date" id="dueDateInput">
-            <select id="priorityInput">
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
-            <div id="taskCounter" class="green">Tasks: 0</div>
-            <ul id="taskList"></ul>
+        <div class="task-manager-dashboard">
+            <div id="task-manager">
+                <input type="text" id="taskInput" placeholder="Add a new task">
+                <input type="date" id="dueDateInput">
+                <select id="priorityInput">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <div id="taskCounter" class="green">Tasks: 0</div>
+                <ul id="taskList"></ul>
+            </div>
         </div>
     </div>
 
