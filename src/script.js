@@ -16,28 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addOrUpdateTask() {
+        // Get task details from form inputs
         const taskName = taskInput.value.trim();
         const dueDate = dueDateInput.value;
         const priority = priorityInput.value;
-
-        if (!taskName || !dueDate) {
-            alert('Please fill in all fields.');
+    
+        if (taskName === "" || dueDate === "") {
+            alert("Please fill in all fields.");
             return;
         }
-
-        const newTask = { taskName, dueDate, priority, completed: false };
-
+    
+        // If we are editing a task, update it
         if (editIndex !== null) {
-            tasks[editIndex] = newTask;
+            tasks[editIndex] = { taskName, dueDate, priority, completed: false };
             editIndex = null;
-            addTaskBtn.textContent = 'Add Task';
         } else {
-            tasks.push(newTask);
+            // If we are adding a new task, push it to the tasks array
+            tasks.push({ taskName, dueDate, priority, completed: false });
         }
-
+    
+        // Save the tasks and update the UI
         saveTasks();
         resetForm();
     }
+    
 
     function resetForm() {
         taskInput.value = '';
@@ -136,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.completeTask = completeTask;
 
     // Event listeners for sorting and filtering
+    document.getElementById('addTaskBtn').addEventListener('click', addOrUpdateTask);
     document.getElementById('allTasks').addEventListener('click', () => updateTaskList());
     document.getElementById('completedTasks').addEventListener('click', () => updateTaskList('completed'));
     document.getElementById('pendingTasks').addEventListener('click', () => updateTaskList('pending'));

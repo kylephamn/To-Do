@@ -3,24 +3,30 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Change to column to stack header and content */
+    align-items: center;
     height: 100vh;
     background: #f7f7f7;
 }
 
-.task-manager-dashboard {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+.task-manager-header {
     width: 100%;
-    padding: 70px 20px 20px 20px; /* Adjust the top padding to give space for the header */
-    box-sizing: border-box; /* Include padding in the width */
+    background-color: #D9782D; /* Use the color of your header */
+    color: white;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
-#calendar-container {
-    flex: 1;
-    margin-right: 20px; /* Adjust spacing as needed */
+.task-manager-dashboard {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 70px; /* This should be at least the height of your header */
+    box-sizing: border-box;
+    margin-top: 70px; /* Add margin to push content down below the fixed header */
 }
 
 #task-manager {
